@@ -10,7 +10,13 @@ import {
 import CustomFormField from "./CustomFormField"
 
 export enum FormFieldType {
-    INPUT = 'input'
+    INPUT = 'input',
+    TEXTAREA = 'textarea',
+    PHONE = 'phone_input',
+    CHECKBOX = 'checkbox',
+    DATEPICKER = 'datepicker',
+    SELECT = 'select',
+    SKELETON = 'skeleton',
 }
  
 const formSchema = z.object({
@@ -43,8 +49,14 @@ const formSchema = z.object({
             <p className="text-dark-700">Schedule your first appointment</p>
         </section>
         <CustomFormField 
-        fieldType={FormFieldType.INPUT}
-        control={form.control}/>
+            fieldType={FormFieldType.INPUT}
+            control={form.control}
+            name='name'
+            label='Full name'
+            placeholder="Giorgia Meloni"
+            iconSrc="/assets/icons/user.svg"
+            iconAlt='user'
+        />
         <Button type="submit">Submit</Button>
     </form>
     </Form>
