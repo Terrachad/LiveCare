@@ -3,6 +3,7 @@ import {Plus_Jakarta_Sans} from "next/font/google";
 import "./globals.css";
 
 import {cn} from '@/lib/utils'
+import { ThemeProvider } from "@/components/theme-provider";
 
 const jakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -13,7 +14,7 @@ const jakartaSans = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   title: "LiveCare",
-  description: "A healthcare managment system",
+  description: "A healthcare management system",
 };
 
 export default function RootLayout({
@@ -22,11 +23,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={cn('min-h-screen bg-dark-300 font-sans antialiased',jakartaSans.variable)}
       >
-        {children}
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+          >
+            {children}
+          </ThemeProvider>
+        
       </body>
     </html>
   );
