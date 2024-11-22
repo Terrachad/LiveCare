@@ -3,13 +3,14 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { Button } from "@/components/ui/button"
 import {
   Form,
 } from "@/components/ui/form"
 import CustomFormField from "./CustomFormField"
 import SubmitButton from "../SubmitButton"
 import { useState } from "react"
+import userFormValidation from "@/lib/validation"
+import { useRouter } from "next/navigation"
 
 export enum FormFieldType {
     INPUT = 'input',
@@ -21,27 +22,35 @@ export enum FormFieldType {
     SKELETON = 'skeleton',
 }
  
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-})
+
  
  const PatientForm = () =>{
+    const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
   // 1. Define your form.
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof userFormValidation>>({
+    resolver: zodResolver(userFormValidation),
     defaultValues: {
-      username: "",
+      name: "",
+      email:"",
+      phone:"",
     },
   })
  
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit({name, email, phone}: z.infer<typeof userFormValidation>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values)
+    setIsLoading(true)
+
+    try {/*
+        const userData = {name, email, phone }
+        const user = await createUser(UserData);
+        if(user) router.push(`/patient/${user.$id}/register`)
+        */
+    } catch (error) {
+        console.log(`Error while submitting the main form ${error}`)
+    }
   }
 
   return (
@@ -64,7 +73,7 @@ const formSchema = z.object({
             fieldType={FormFieldType.INPUT}
             control={form.control}
             name='email'
-            label='email'
+            label='Email'
             placeholder="xxxx@vlady.website"
             iconSrc="/assets/icons/email.svg"
             iconAlt='email'
@@ -73,7 +82,7 @@ const formSchema = z.object({
             fieldType={FormFieldType.PHONE}
             control={form.control}
             name='phone'
-            label='phone'
+            label='Phone'
             placeholder="+39 *** *** **"
             iconSrc="/assets/icons/phone.svg"
             iconAlt='phone'
