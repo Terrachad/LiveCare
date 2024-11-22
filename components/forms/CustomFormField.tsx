@@ -1,6 +1,5 @@
 import {
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -10,9 +9,13 @@ import {
   import { Control, FieldValues } from "react-hook-form"
   import { FormFieldType } from "./PatientForm"
   import Image, { StaticImageData } from "next/image"
+  import 'react-phone-number-input/style.css'
+  import PhoneInput from 'react-phone-number-input'
+  import {E164Number} from 'libphonenumber-js/core'
+
   
   interface CustomFormFieldProps {
-      control: Control<FieldValues>,
+      control: Control<any>,// eslint-disable-line @typescript-eslint/no-explicit-any
       fieldType: FormFieldType,
       name: string, 
       label?: string,
@@ -50,6 +53,22 @@ import {
                       <Input {...field} placeholder={placeholder} className="shad-input border-0" />
                   </div>
               )
+              break;
+              case FormFieldType.PHONE:
+                return (
+                    <FormControl>
+                        <PhoneInput 
+                            defaultCountry="IT"
+                            placeholder={placeholder}
+                            international
+                            withCountryCallingCode
+                            value={field.value as E164Number | undefined}
+                            onChange={field.onChange}
+                            className="input-phone"
+                        />
+                    </FormControl>
+                )
+                break;
           default:
               return null;
       }
