@@ -8,6 +8,10 @@ import {
   Form,
 } from "@/components/ui/form"
 import CustomFormField from "./CustomFormField"
+
+export enum FormFieldType {
+    INPUT = 'input'
+}
  
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -38,7 +42,9 @@ const formSchema = z.object({
             <h1 className="header">Hi there 👋</h1>
             <p className="text-dark-700">Schedule your first appointment</p>
         </section>
-        <CustomFormField control={form.control}/>
+        <CustomFormField 
+        fieldType={FormFieldType.INPUT}
+        control={form.control}/>
         <Button type="submit">Submit</Button>
     </form>
     </Form>
