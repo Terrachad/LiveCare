@@ -67,4 +67,4 @@ declare interface RegisterPageProps {
     params: Promise<{
       userId: string
     }>
-  }
+}
