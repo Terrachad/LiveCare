@@ -9,7 +9,7 @@ import {
 import CustomFormField from "./CustomFormField"
 import SubmitButton from "../SubmitButton"
 import { useState } from "react"
-import {PatientFormValidation, UserFormValidation, userFormValidation} from "@/lib/validation"
+import {PatientFormValidation, UserFormValidation} from "@/lib/validation"
 import { useRouter } from "next/navigation"
 import { createUser } from "@/lib/actions/patient.actions"
 import { FormFieldType } from "@/lib/enum"
