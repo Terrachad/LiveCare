@@ -47,7 +47,7 @@ export enum FormFieldType {
     try {
         const userData = {name, email, phone }
         const user = await createUser(userData);
-        if(user) router.push(`/patient/${user.$id}/register`)
+        if(user) router.push(`/patients/${user.$id}/register`)
         
     } catch (error) {
         console.log(`Error while submitting the main form ${error}`)
