@@ -6,7 +6,7 @@ import {
     FormMessage,
   } from "@/components/ui/form"
   import { Input } from "@/components/ui/input"
-  import { Control, FieldValues } from "react-hook-form"
+  import { Control, FieldValues, Form } from "react-hook-form"
   import Image, { StaticImageData } from "next/image"
   import 'react-phone-number-input/style.css'
   import PhoneInput from 'react-phone-number-input'
@@ -15,6 +15,7 @@ import { FormFieldType } from "@/lib/enum"
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
+import { Select, SelectContent, SelectTrigger, SelectValue } from "../ui/select"
   
   interface CustomFormFieldProps {
       control: Control<any>,// eslint-disable-line @typescript-eslint/no-explicit-any
@@ -96,25 +97,20 @@ import "react-datepicker/dist/react-datepicker.css";
                 break;
                 case FormFieldType.SELECT:
                     return (
-                        <div className="flex rounded-md border border-dark-500 bg-dark-400">
-                            <Image
-                            src='/assets/icons/calendar.svg'
-                            height={24}
-                            width={24}
-                            alt="calendar"
-                            className="ml-2"
-                            />
+
                             <FormControl>
-                                <DatePicker 
-                                selected={field.value}
-                                onChange={(date) => field.onChange(date)} 
-                                dateFormat={dateFormat ?? 'dd/MM/yyyy'}
-                                showTimeSelect={showTimeSelect ?? false}
-                                timeInputLabel="Time:"
-                                wrapperClassName="date-picker"
-                                />
+                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <FormControl >
+                                        <SelectTrigger className='shad-trigger'>
+                                            <SelectValue placeholder={placeholder}/>
+                                        </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent className="shad-select-content">
+                                        {props.children}
+                                    </SelectContent>
+                                </Select>
                             </FormControl>
-                        </div>
+
                     )
                 break;
                 case FormFieldType.SKELETON:
