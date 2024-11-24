@@ -6,9 +6,6 @@ import { z } from "zod"
 import {
   Form,
   FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
 } from "@/components/ui/form"
 import CustomFormField from "./CustomFormField"
 import SubmitButton from "../SubmitButton"
@@ -18,8 +15,10 @@ import { useRouter } from "next/navigation"
 import { createUser } from "@/lib/actions/patient.actions"
 import { FormFieldType } from "@/lib/enum"
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
-import { GenderOptions } from "@/constants"
+import { Doctors, GenderOptions } from "@/constants"
 import { Label } from "../ui/label"
+import { Select, SelectContent, SelectItem } from "../ui/select"
+import Image from "next/image"
 
 
 
@@ -182,6 +181,25 @@ import { Label } from "../ui/label"
                 placeholder="Select a physician"
                 
             />
+            {Doctors.map((doctor)=>(
+                <Select key={doctor.name}>
+
+                <SelectContent key={doctor.name}>
+                                    <SelectItem key={doctor.name} value={doctor.name}>
+                    <div className="flex cursor-pointer items-center gap-2">
+                        <Image
+                            src={doctor.image}
+                            alt={doctor.name}
+                            width={32}
+                            height={32}
+                            className="rounded-full border border-dark-500"
+                        />
+                    </div>  
+                </SelectItem>
+                </SelectContent>
+                </Select>
+
+            ))}
         </div>
         <SubmitButton isLoading={isLoading}>
             Get Started
