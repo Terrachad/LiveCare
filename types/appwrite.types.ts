@@ -35,10 +35,3 @@ export interface Appointment extends Models.Document {
   cancellationReason: string | null;
 }
 
-export interface AppwriteError extends Error {
-    code: number;
-    response?: {
-        message: string;
-        code: number;
-    };
-}
