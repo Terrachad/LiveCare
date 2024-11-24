@@ -16,6 +16,7 @@ import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 import { Select, SelectContent, SelectTrigger, SelectValue } from "../ui/select"
+import { Textarea } from "../ui/textarea"
   
   interface CustomFormFieldProps {
       control: Control<any>,// eslint-disable-line @typescript-eslint/no-explicit-any
@@ -93,6 +94,13 @@ import { Select, SelectContent, SelectTrigger, SelectValue } from "../ui/select"
                                 />
                             </FormControl>
                         </div>
+                    )
+                break;
+                case FormFieldType.TEXTAREA:
+                    return (
+                        <FormControl>
+                            <Textarea placeholder={placeholder}/>
+                        </FormControl>
                     )
                 break;
                 case FormFieldType.SELECT:
