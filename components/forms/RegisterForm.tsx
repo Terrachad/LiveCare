@@ -134,13 +134,54 @@ import { Label } from "../ui/label"
             />
         </div>
         <div className="flex flex-col gap-6 xl:flex-row">
-            
+        <CustomFormField 
+            fieldType={FormFieldType.INPUT}
+            control={form.control}
+            name='address'
+            label='Address'
+            placeholder="Via Riviera 6, Italia"
+        />
+            <CustomFormField 
+            fieldType={FormFieldType.INPUT}
+            control={form.control}
+            name='occupation'
+            label='Occupation'
+            placeholder="Software Engineer"
+        />
         </div>
         <div className="flex flex-col gap-6 xl:flex-row">
-            
+        <CustomFormField 
+            fieldType={FormFieldType.INPUT}
+            control={form.control}
+            name='emergencyContactName'
+            label='Emergency contact name'
+            placeholder="Guardian's name"
+        />
+        <CustomFormField 
+            fieldType={FormFieldType.PHONE}
+            control={form.control}
+            name='emergencyContactNumber'
+            label='Emergency contact number'
+            placeholder="+39 *** *** **"
+            iconSrc="/assets/icons/phone.svg"
+            iconAlt='phone'
+        />
         </div>
+        <section className="space-y-6">
+            <div className="mb-9 space-y-1">
+            <h2 className="sub-header">Medical information</h2>
+
+            </div>
+        </section>
         <div className="flex flex-col gap-6 xl:flex-row">
-            
+        <CustomFormField 
+                fieldType={FormFieldType.SELECT}
+                control={form.control}
+                name='primaryPhysician'
+                label='Primary Physician'
+                placeholder="Select a physician"
+                
+            />
         </div>
         <SubmitButton isLoading={isLoading}>
             Get Started
