@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import {
   Form,
+  FormControl,
 } from "@/components/ui/form"
 import CustomFormField from "./CustomFormField"
 import SubmitButton from "../SubmitButton"
@@ -13,6 +14,10 @@ import {userFormValidation} from "@/lib/validation"
 import { useRouter } from "next/navigation"
 import { createUser } from "@/lib/actions/patient.actions"
 import { FormFieldType } from "@/lib/enum"
+import { RadioGroup } from "../ui/radio-group"
+import { GenderOptions } from "@/constants"
+import { RadioGroupItem } from "@radix-ui/react-radio-group"
+import { Label } from "../ui/label"
 
 
 
@@ -89,7 +94,39 @@ import { FormFieldType } from "@/lib/enum"
         />
         </div>
         <div className="flex flex-col gap-6 xl:flex-row">
-
+        <CustomFormField 
+            fieldType={FormFieldType.DATEPICKER}
+            control={form.control}
+            name='birthdate'
+            label='Date of birth'
+            placeholder="xxxx@vlady.website"
+            iconSrc="/assets/icons/calendar.svg"
+            iconAlt='birthdate'
+        />
+                <CustomFormField 
+            fieldType={FormFieldType.SKELETON}
+            control={form.control}
+            name='Gender'
+            label='Gender'
+            renderSkeleton={(field) =>{
+                <FormControl>
+                    <RadioGroup
+                    className="flex h-11 gap-6 xl:justify-between"
+                    onVolumeChange={field.onChange}
+                    defaultValue={field.value}
+                    >
+                        {GenderOptions.map((gender:string)=>(
+                            <div key={gender} className="radio-group">
+                                <RadioGroupItem value={gender} id={gender}/>
+                                <Label htmlFor={gender} className="cursor-pointer">
+                                    {gender}
+                                </Label>
+                            </div>
+                        ))}
+                    </RadioGroup>
+                </FormControl>
+            }}
+        />
         </div>
         <div className="flex flex-col gap-6 xl:flex-row">
             
