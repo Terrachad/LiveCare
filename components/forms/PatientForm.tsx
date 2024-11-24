@@ -9,10 +9,11 @@ import {
 import CustomFormField from "./CustomFormField"
 import SubmitButton from "../SubmitButton"
 import { useState } from "react"
-import {userFormValidation} from "@/lib/validation"
+import {PatientFormValidation, UserFormValidation, userFormValidation} from "@/lib/validation"
 import { useRouter } from "next/navigation"
 import { createUser } from "@/lib/actions/patient.actions"
 import { FormFieldType } from "@/lib/enum"
+import { PatientFormDefaultValues } from "@/constants"
 
 
 
@@ -21,9 +22,10 @@ import { FormFieldType } from "@/lib/enum"
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
   // 1. Define your form.
-  const form = useForm<z.infer<typeof userFormValidation>>({
-    resolver: zodResolver(userFormValidation),
+  const form = useForm<z.infer<typeof PatientFormValidation>>({
+    resolver: zodResolver(PatientFormValidation),
     defaultValues: {
+      ...PatientFormDefaultValues,
       name: "",
       email:"",
       phone:"",
@@ -31,16 +33,21 @@ import { FormFieldType } from "@/lib/enum"
   })
  
   // 2. Define a submit handler.
-  async function onSubmit({name, email, phone}: z.infer<typeof userFormValidation>) {
+  async function onSubmit(values: z.infer<typeof PatientFormValidation>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     setIsLoading(true)
-
+    let formData;
+    if(values.identificationDocument && values.identificationDocument.length > 0){
+      const blobFile = new Blob([values.identificationDocument[0]],{
+        type: values.identificationDocument[0].type
+      })
+      formData = new FormData();
+      formData.append('blobFile', blobFile);
+      formData.append('fileName', values.identificationDocument[0].name)
+    }
     try {
-        const userData = {name, email, phone }
-        const user = await createUser(userData);
-        if(user) router.push(`/patients/${user.$id}/register`)
-        
+
     } catch (error) {
         console.log(`Error while submitting the main form ${error}`)
     }
