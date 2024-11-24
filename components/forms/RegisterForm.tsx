@@ -283,10 +283,36 @@ import FileUploader from "../FileUploader"
               label="Identification Document"
               renderSkeleton={(field) => (
                 <FormControl>
-                    <FileUploader/>
+                    <FileUploader
+                    files={field.value}
+                    onChange={field.onChange}
+                    />
                 </FormControl>
               )}
         />
+        <section className="space-y-6">
+            <div className="mb-9 space-y-1">
+            <h2 className="sub-header">Consent and privacy</h2>
+            <CustomFormField
+              fieldType={FormFieldType.CHECKBOX}
+              control={form.control}
+              name="treatmentConsent"
+              label="I consent to treatment"
+            />
+            <CustomFormField
+              fieldType={FormFieldType.CHECKBOX}
+              control={form.control}
+              name="dataConsent"
+              label="I consent to processing of my data"
+            />
+            <CustomFormField
+              fieldType={FormFieldType.CHECKBOX}
+              control={form.control}
+              name="privacyConsent"
+              label="I consent to processing to privacy policy"
+            />
+            </div>
+        </section>
         <SubmitButton isLoading={isLoading}>
             Get Started
         </SubmitButton>
