@@ -48,7 +48,7 @@ import { FormFieldType } from "@/lib/enum"
 
   return (
     <Form {...form}>
-    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-12 flex-1">
+    <form onSubmit={form.handleSubmit(onSubmit)} className=" flex-1 space-y-12">
         <section className="space-y-4">
             <h1 className="header">Welcome 👋</h1>
             <p className="text-dark-700">Let us know more about yourself</p>
@@ -68,6 +68,38 @@ import { FormFieldType } from "@/lib/enum"
             iconSrc="/assets/icons/user.svg"
             iconAlt='user'
         />
+        <div className="flex flex-col gap-6 xl:flex-row">
+        <CustomFormField 
+            fieldType={FormFieldType.INPUT}
+            control={form.control}
+            name='email'
+            label='Email'
+            placeholder="xxxx@vlady.website"
+            iconSrc="/assets/icons/email.svg"
+            iconAlt='email'
+        />
+                <CustomFormField 
+            fieldType={FormFieldType.PHONE}
+            control={form.control}
+            name='phone'
+            label='Phone'
+            placeholder="+39 *** *** **"
+            iconSrc="/assets/icons/phone.svg"
+            iconAlt='phone'
+        />
+        </div>
+        <div className="flex flex-col gap-6 xl:flex-row">
+
+        </div>
+        <div className="flex flex-col gap-6 xl:flex-row">
+            
+        </div>
+        <div className="flex flex-col gap-6 xl:flex-row">
+            
+        </div>
+        <div className="flex flex-col gap-6 xl:flex-row">
+            
+        </div>
         <SubmitButton isLoading={isLoading}>
             Get Started
         </SubmitButton>
