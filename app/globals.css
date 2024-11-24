@@ -1,7 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@layer base {
+  :root {
+    
+    --radio-size: 2rem;
+    
+    /* rest of your css variables */
+  }
+}
 /* ========================================== TAILWIND STYLES */
 @layer base {
   /* Remove scrollbar */
