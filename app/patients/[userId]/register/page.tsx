@@ -4,8 +4,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
-const Register = async ({params: {userId}} : SearchParamProps) => {
-    const user = await getUser(userId)
+const Register = async ({ params }: RegisterPageProps) => {
+    const resolvedParams = await params
+    const user = await getUser(resolvedParams.userId)
   return (
     <div className="flex h-screen max-h-screen">
       <section className="remove-scrollbar container my-auto">

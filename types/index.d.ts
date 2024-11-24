@@ -62,3 +62,9 @@ declare type SearchParamProps = {
         code: number;
     };
 }
+
+declare interface RegisterPageProps {
+    params: Promise<{
+      userId: string
+    }>
+  }
