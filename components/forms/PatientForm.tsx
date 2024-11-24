@@ -12,17 +12,9 @@ import { useState } from "react"
 import {userFormValidation} from "@/lib/validation"
 import { useRouter } from "next/navigation"
 import { createUser } from "@/lib/actions/patient.actions"
+import { FormFieldType } from "@/lib/enum"
 
-export enum FormFieldType {
-    INPUT = 'input',
-    TEXTAREA = 'textarea',
-    PHONE = 'phone_input',
-    CHECKBOX = 'checkbox',
-    DATEPICKER = 'datepicker',
-    SELECT = 'select',
-    SKELETON = 'skeleton',
-}
- 
+
 
  
  const PatientForm = () =>{
