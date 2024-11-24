@@ -173,34 +173,30 @@ import Image from "next/image"
             </div>
         </section>
         <div className="flex flex-col gap-6 xl:flex-row">
-        <CustomFormField 
-                fieldType={FormFieldType.SELECT}
-                control={form.control}
-                name='primaryPhysician'
-                label='Primary Physician'
-                placeholder="Select a physician"
-                
-            />
-            {Doctors.map((doctor)=>(
-                <Select key={doctor.name}>
-
-                <SelectContent key={doctor.name}>
-                                    <SelectItem key={doctor.name} value={doctor.name}>
-                    <div className="flex cursor-pointer items-center gap-2">
-                        <Image
-                            src={doctor.image}
-                            alt={doctor.name}
-                            width={32}
-                            height={32}
-                            className="rounded-full border border-dark-500"
-                        />
-                    </div>  
-                </SelectItem>
-                </SelectContent>
-                </Select>
-
+        <CustomFormField
+            fieldType={FormFieldType.SELECT}
+            control={form.control}
+            name="primaryPhysician"
+            label="Primary care physician"
+            placeholder="Select a physician"
+          >
+            {Doctors.map((doctor, i) => (
+              <SelectItem key={doctor.name + i} value={doctor.name}>
+                <div className="flex cursor-pointer items-center gap-2">
+                  <Image
+                    src={doctor.image}
+                    width={32}
+                    height={32}
+                    alt="doctor"
+                    className="rounded-full border border-dark-500"
+                  />
+                  <p>{doctor.name}</p>
+                </div>
+              </SelectItem>
             ))}
+          </CustomFormField>
         </div>
+
         <SubmitButton isLoading={isLoading}>
             Get Started
         </SubmitButton>
