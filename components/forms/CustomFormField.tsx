@@ -7,11 +7,11 @@ import {
   } from "@/components/ui/form"
   import { Input } from "@/components/ui/input"
   import { Control, FieldValues } from "react-hook-form"
-  import { FormFieldType } from "./PatientForm"
   import Image, { StaticImageData } from "next/image"
   import 'react-phone-number-input/style.css'
   import PhoneInput from 'react-phone-number-input'
   import {E164Number} from 'libphonenumber-js/core'
+import { FormFieldType } from "@/lib/enum"
 
   
   interface CustomFormFieldProps {
