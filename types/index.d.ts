@@ -55,6 +55,11 @@ declare type SearchParamProps = {
     type: string;
   };
 
+  declare type FileUploaderProps = {
+    files: File[] | undefined,
+    onChange: (files:File[]) => void
+  }
+
   declare interface AppwriteError extends Error {
     code: number;
     response?: {
