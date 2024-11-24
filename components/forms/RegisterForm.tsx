@@ -196,6 +196,40 @@ import Image from "next/image"
             ))}
           </CustomFormField>
         </div>
+        <div className="flex flex-col gap-6 xl:flex-row">
+
+        <CustomFormField 
+            fieldType={FormFieldType.INPUT}
+            control={form.control}
+            name='insuranceProvider'
+            label='Insurance Provider'
+            placeholder="Techniker Krankenkasse"
+        />
+            <CustomFormField 
+            fieldType={FormFieldType.INPUT}
+            control={form.control}
+            name='insurancePolicyNumber'
+            label='Insurance Policy Number'
+            placeholder="XXX123456789"
+        />
+        </div>
+        <div className="flex flex-col gap-6 xl:flex-row">
+
+        <CustomFormField 
+            fieldType={FormFieldType.TEXTAREA}
+            control={form.control}
+            name='allergies'
+            label='Allergies '
+            placeholder="Peanuts, Penicillin, Pollen (leave blank if none)"
+        />
+            <CustomFormField 
+            fieldType={FormFieldType.TEXTAREA}
+            control={form.control}
+            name='currentMedication'
+            label='Current medication '
+            placeholder="Ibuprofen 200mg (leave blank if none)"
+        />
+        </div>
 
         <SubmitButton isLoading={isLoading}>
             Get Started
