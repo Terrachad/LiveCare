@@ -12,7 +12,9 @@ import {
   import PhoneInput from 'react-phone-number-input'
   import {E164Number} from 'libphonenumber-js/core'
 import { FormFieldType } from "@/lib/enum"
+import DatePicker from "react-datepicker";
 
+import "react-datepicker/dist/react-datepicker.css";
   
   interface CustomFormFieldProps {
       control: Control<any>,// eslint-disable-line @typescript-eslint/no-explicit-any
@@ -35,7 +37,7 @@ import { FormFieldType } from "@/lib/enum"
   }
   
   const RenderField = ({ field, props }: RenderFieldProps) => {
-      const { fieldType, iconAlt, iconSrc, placeholder } = props;
+      const { fieldType, iconAlt, iconSrc, placeholder, showTimeSelect, dateFormat } = props;
   
       switch (fieldType) {
           case FormFieldType.INPUT:
@@ -68,6 +70,29 @@ import { FormFieldType } from "@/lib/enum"
                         />
                     </FormControl>
                 )
+                break;
+                case FormFieldType.DATEPICKER:
+                    return (
+                        <div className="flex rounded-md border border-dark-500 bg-dark-400">
+                            <Image
+                            src='/assets/icons/calendar.svg'
+                            height={24}
+                            width={24}
+                            alt="calendar"
+                            className="ml-2"
+                            />
+                            <FormControl>
+                                <DatePicker 
+                                selected={field.value}
+                                onChange={(date) => field.onChange(date)} 
+                                dateFormat={dateFormat ?? 'dd/MM/yyyy'}
+                                showTimeSelect={showTimeSelect ?? false}
+                                />
+                            </FormControl>
+                        </div>
+
+                        
+                    )
                 break;
           default:
               return null;
