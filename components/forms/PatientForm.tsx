@@ -11,6 +11,7 @@ import SubmitButton from "../SubmitButton"
 import { useState } from "react"
 import {userFormValidation} from "@/lib/validation"
 import { useRouter } from "next/navigation"
+import { createUser } from "@/lib/actions/patient.actions"
 
 export enum FormFieldType {
     INPUT = 'input',
@@ -43,11 +44,11 @@ export enum FormFieldType {
     // ✅ This will be type-safe and validated.
     setIsLoading(true)
 
-    try {/*
+    try {
         const userData = {name, email, phone }
-        const user = await createUser(UserData);
+        const user = await createUser(userData);
         if(user) router.push(`/patient/${user.$id}/register`)
-        */
+        
     } catch (error) {
         console.log(`Error while submitting the main form ${error}`)
     }
