@@ -99,7 +99,7 @@ import { Textarea } from "../ui/textarea"
                 case FormFieldType.TEXTAREA:
                     return (
                         <FormControl>
-                            <Textarea placeholder={placeholder}/>
+                            <Textarea placeholder={placeholder} {...field} className="shad-text-area" disabled={props.disabled}/>
                         </FormControl>
                     )
                 break;
