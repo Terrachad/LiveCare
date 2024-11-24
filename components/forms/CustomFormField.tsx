@@ -87,6 +87,8 @@ import "react-datepicker/dist/react-datepicker.css";
                                 onChange={(date) => field.onChange(date)} 
                                 dateFormat={dateFormat ?? 'dd/MM/yyyy'}
                                 showTimeSelect={showTimeSelect ?? false}
+                                timeInputLabel="Time:"
+                                wrapperClassName="date-picker"
                                 />
                             </FormControl>
                         </div>
