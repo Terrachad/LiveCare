@@ -9,11 +9,10 @@ import {
 import CustomFormField from "./CustomFormField"
 import SubmitButton from "../SubmitButton"
 import { useState } from "react"
-import {PatientFormValidation, UserFormValidation} from "@/lib/validation"
+import {UserFormValidation} from "@/lib/validation"
 import { useRouter } from "next/navigation"
 import { createUser } from "@/lib/actions/patient.actions"
 import { FormFieldType } from "@/lib/enum"
-import { PatientFormDefaultValues } from "@/constants"
 
 
 
@@ -22,10 +21,9 @@ import { PatientFormDefaultValues } from "@/constants"
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
   // 1. Define your form.
-  const form = useForm<z.infer<typeof PatientFormValidation>>({
-    resolver: zodResolver(PatientFormValidation),
+  const form = useForm<z.infer<typeof UserFormValidation>>({
+    resolver: zodResolver(UserFormValidation),
     defaultValues: {
-      ...PatientFormDefaultValues,
       name: "",
       email:"",
       phone:"",
@@ -33,21 +31,16 @@ import { PatientFormDefaultValues } from "@/constants"
   })
  
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof PatientFormValidation>) {
+  async function onSubmit({name, email, phone}: z.infer<typeof UserFormValidation>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     setIsLoading(true)
-    let formData;
-    if(values.identificationDocument && values.identificationDocument.length > 0){
-      const blobFile = new Blob([values.identificationDocument[0]],{
-        type: values.identificationDocument[0].type
-      })
-      formData = new FormData();
-      formData.append('blobFile', blobFile);
-      formData.append('fileName', values.identificationDocument[0].name)
-    }
-    try {
 
+    try {
+        const userData = {name, email, phone }
+        const user = await createUser(userData);
+        if(user) router.push(`/patients/${user.$id}/register`)
+        
     } catch (error) {
         console.log(`Error while submitting the main form ${error}`)
     }
