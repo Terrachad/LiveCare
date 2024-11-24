@@ -37,7 +37,7 @@ import "react-datepicker/dist/react-datepicker.css";
   }
   
   const RenderField = ({ field, props }: RenderFieldProps) => {
-      const { fieldType, iconAlt, iconSrc, placeholder, showTimeSelect, dateFormat } = props;
+      const { fieldType, iconAlt, iconSrc, placeholder, showTimeSelect, dateFormat, renderSkeleton } = props;
   
       switch (fieldType) {
           case FormFieldType.INPUT:
@@ -92,9 +92,10 @@ import "react-datepicker/dist/react-datepicker.css";
                                 />
                             </FormControl>
                         </div>
-
-                        
                     )
+                break;
+                case FormFieldType.SKELETON:
+                    return renderSkeleton ? renderSkeleton(field) : null
                 break;
           default:
               return null;
