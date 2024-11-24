@@ -54,3 +54,11 @@ declare type SearchParamProps = {
     appointment: Appointment;
     type: string;
   };
+
+  declare interface AppwriteError extends Error {
+    code: number;
+    response?: {
+        message: string;
+        code: number;
+    };
+}
