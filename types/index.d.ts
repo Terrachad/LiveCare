@@ -48,6 +48,13 @@ declare type SearchParamProps = {
     note: string | undefined;
   };
 
+  declare type StatCardProps = {
+    type: 'appointments' | 'pending' | 'cancelled'
+    count: number
+    label: string
+    icon: string
+  }
+
   declare type AppointmentProps = {
     userId: string;
     patientId: string;
