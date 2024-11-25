@@ -3,6 +3,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
+
+
+
 const Admin = () => {
   return (
     <div className='mx-auto flex max-w-7xl flex-col space-y-14'>
