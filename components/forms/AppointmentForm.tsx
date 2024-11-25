@@ -73,7 +73,7 @@ const form = useForm<z.infer<typeof AppointmentFormValidation>>({
             const appoitment = await createAppointment(appointmentData)
             if(appoitment){
                 form.reset();
-                router.push(`/patients/${userId}/new-appointment/success?appoitmentId=${appoitment.$id}`)
+                router.push(`/patients/${userId}/new-appointment/success?appointmentId=${appoitment.$id}`)
             }
         }
     } catch (error) {
