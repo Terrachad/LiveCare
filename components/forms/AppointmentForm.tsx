@@ -13,6 +13,9 @@ import {UserFormValidation} from "@/lib/validation"
 import { useRouter } from "next/navigation"
 import { createUser } from "@/lib/actions/patient.actions"
 import { FormFieldType } from "@/lib/enum"
+import Image from "next/image"
+import { Doctors } from "@/constants"
+import { SelectItem } from "../ui/select"
 
 
 
@@ -55,33 +58,36 @@ import { FormFieldType } from "@/lib/enum"
             <h1 className="header">New Appointment</h1>
             <p className="text-dark-700">Request a new appointment in 10 seconds</p>
         </section>
-        <CustomFormField 
-            fieldType={FormFieldType.INPUT}
+
+        {type !== 'cancelled' && (
+            <>
+        <CustomFormField
+            fieldType={FormFieldType.SELECT}
             control={form.control}
-            name='name'
-            label='Full name'
-            placeholder="Giorgia Meloni"
-            iconSrc="/assets/icons/user.svg"
-            iconAlt='user'
-        />
-        <CustomFormField 
-            fieldType={FormFieldType.INPUT}
-            control={form.control}
-            name='email'
-            label='Email'
-            placeholder="xxxx@vlady.website"
-            iconSrc="/assets/icons/email.svg"
-            iconAlt='email'
-        />
-                <CustomFormField 
-            fieldType={FormFieldType.PHONE}
-            control={form.control}
-            name='phone'
-            label='Phone'
-            placeholder="+39 *** *** **"
-            iconSrc="/assets/icons/phone.svg"
-            iconAlt='phone'
-        />
+            name="primaryPhysician"
+            label="Primary care physician"
+            placeholder="Select a physician"
+          >
+            {Doctors.map((doctor, i) => (
+              <SelectItem key={doctor.name + i} value={doctor.name}>
+                <div className="flex cursor-pointer items-center gap-2">
+                  <Image
+                    src={doctor.image}
+                    width={32}
+                    height={32}
+                    alt="doctor"
+                    className="rounded-full border border-dark-500"
+                  />
+                  <p>{doctor.name}</p>
+                </div>
+              </SelectItem>
+            ))}
+          </CustomFormField>
+            </>
+        )}
+
+
+
         <SubmitButton isLoading={isLoading}>
             Get Started
         </SubmitButton>
