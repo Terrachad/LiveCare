@@ -32,7 +32,7 @@ export default async function NewAppointment({params: {userId}}: SearchParamProp
 
       </section>
       <Image
-      src='/assets/images/appointment.png'
+      src='/assets/images/appointment-img.png'
       height={1000}
       width={1000}
       alt="appointment"
