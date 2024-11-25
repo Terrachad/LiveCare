@@ -9,43 +9,73 @@ import {
 import CustomFormField from "./CustomFormField"
 import SubmitButton from "../SubmitButton"
 import { useState } from "react"
-import {UserFormValidation} from "@/lib/validation"
+import { getAppointmentSchema} from "@/lib/validation"
 import { useRouter } from "next/navigation"
 import { createUser } from "@/lib/actions/patient.actions"
 import { FormFieldType } from "@/lib/enum"
 import Image from "next/image"
 import { Doctors } from "@/constants"
 import { SelectItem } from "../ui/select"
+import { createAppointment } from "@/lib/actions/appointment.actions"
 
 
 
  
- const AppointmentForm = ({
+const AppointmentForm = ({
     userId, patientId, type
- }: AppointmentProps) =>{
+}: AppointmentProps) =>{
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
-  // 1. Define your form.
-  const form = useForm<z.infer<typeof UserFormValidation>>({
-    resolver: zodResolver(UserFormValidation),
+    const AppointmentFormValidation = getAppointmentSchema(type)
+
+const form = useForm<z.infer<typeof AppointmentFormValidation>>({
+    resolver: zodResolver(AppointmentFormValidation),
     defaultValues: {
-      name: "",
-      email:"",
-      phone:"",
+        primaryPhysician: '',
+        schedule: new Date(),
+        reason: '',
+        note: '',
+        cancellationReason: '',
     },
-  })
+})
  
   // 2. Define a submit handler.
-  async function onSubmit({name, email, phone}: z.infer<typeof UserFormValidation>) {
+  async function onSubmit(values: z.infer<typeof AppointmentFormValidation>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     setIsLoading(true)
 
+    let status;
+
+    switch(type){
+        case 'schedule':
+            status = 'scheduled';
+            break;
+        case 'cancel':
+            status = 'cancelled';
+            break;
+        default:
+            status = 'pending';
+            break;
+    }
+
     try {
-        const userData = {name, email, phone }
-        const user = await createUser(userData);
-        if(user) router.push(`/patients/${user.$id}/register`)
-        
+        if(type === 'create' && patientId ){
+            const appointmentData = {
+                userId,
+                patient:patientId,
+                primaryPhysician: values.primaryPhysician,
+                schedule: new Date(values.schedule),
+                reason: values.reason!,
+                note: values.note,
+                status: status as Status,
+            }
+            const appoitment = await createAppointment(appointmentData)
+            if(appoitment){
+                form.reset();
+                router.push(`/patients/${userId}/new-appoitment/sucess?appoitmentId=${appoitment.$id}`)
+            }
+        }
     } catch (error) {
         console.log(`Error while submitting the main form ${error}`)
     }
@@ -117,7 +147,7 @@ import { SelectItem } from "../ui/select"
                 <CustomFormField
                     fieldType={FormFieldType.TEXTAREA}
                     control={form.control}
-                    name="notes"
+                    name="note"
                     label="Notes"
                     placeholder="Enter additional notes"
                 />
