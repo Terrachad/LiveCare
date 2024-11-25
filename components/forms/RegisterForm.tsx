@@ -12,7 +12,7 @@ import SubmitButton from "../SubmitButton"
 import { useState } from "react"
 import {PatientFormValidation, UserFormValidation} from "@/lib/validation"
 import { useRouter } from "next/navigation"
-import { createUser } from "@/lib/actions/patient.actions"
+import { createUser, registerPatient } from "@/lib/actions/patient.actions"
 import { FormFieldType } from "@/lib/enum"
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
 import { Doctors, GenderOptions, IdentificationTypes, PatientFormDefaultValues } from "@/constants"
@@ -25,48 +25,76 @@ import Router from "next/router"
 
 
  
- const RegisterForm = ({user} : {user : User}) =>{
+const RegisterForm = ({ user }: { user: User }) => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
-  // 1. Define your form.
-  const form = useForm<z.infer<typeof PatientFormValidation>>({
-    resolver: zodResolver(PatientFormValidation),
-    defaultValues: {
-        ...PatientFormDefaultValues,
-      name: "",
-      email:"",
-      phone:"",
-    },
-  })
- 
-  // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof PatientFormValidation>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    setIsLoading(true)
-    let identificationFormData;
-    if(values.identificationDocument && values.identificationDocument.length > 0){
-      const blobFile = new Blob([values.identificationDocument[0]],{
-        type: values.identificationDocument[0].type
-      })
-      identificationFormData = new FormData();
-      identificationFormData.append('blobFile', blobFile);
-      identificationFormData.append('fileName', values.identificationDocument[0].name)
-    }
-    try {
-      const patientData = {
-        ...values,
-        userId: user.$id,
-        birthDate: new Date(values.birthDate),
-        IdentificationDocument: identificationFormData,
-      }
-      const patient = await registerPatient(patientData);
-      if(patient) router.push(`/patients/${user.$id}/new-appointment`)
-    } catch (error) {
-        console.log(`Error while submitting the main form ${error}`)
-    }
   
-  }
+    const form = useForm<z.infer<typeof PatientFormValidation>>({
+      resolver: zodResolver(PatientFormValidation),
+      defaultValues: {
+        ...PatientFormDefaultValues,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+      },
+    });
+  
+    const onSubmit = async (values: z.infer<typeof PatientFormValidation>) => {
+      setIsLoading(true);
+  
+      // Store file info in form data as
+      let formData;
+      if (
+        values.identificationDocument &&
+        values.identificationDocument?.length > 0
+      ) {
+        const blobFile = new Blob([values.identificationDocument[0]], {
+          type: values.identificationDocument[0].type,
+        });
+  
+        formData = new FormData();
+        formData.append("blobFile", blobFile);
+        formData.append("fileName", values.identificationDocument[0].name);
+      }
+  
+      try {
+        const patient = {
+          userId: user.$id,
+          name: values.name,
+          email: values.email,
+          phone: values.phone,
+          birthDate: new Date(values.birthDate),
+          gender: values.gender,
+          address: values.address,
+          occupation: values.occupation,
+          emergencyContactName: values.emergencyContactName,
+          emergencyContactNumber: values.emergencyContactNumber,
+          primaryPhysician: values.primaryPhysician,
+          insuranceProvider: values.insuranceProvider,
+          insurancePolicyNumber: values.insurancePolicyNumber,
+          allergies: values.allergies,
+          currentMedication: values.currentMedication,
+          familyMedicalHistory: values.familyMedicalHistory,
+          pastMedicalHistory: values.pastMedicalHistory,
+          identificationType: values.identificationType,
+          identificationNumber: values.identificationNumber,
+          identificationDocument: values.identificationDocument
+            ? formData
+            : undefined,
+          privacyConsent: values.privacyConsent,
+        };
+  
+        const newPatient = await registerPatient(patient);
+  
+        if (newPatient) {
+          router.push(`/patients/${user.$id}/new-appointment`);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+  
+      setIsLoading(false);
+    };
 
   return (
     <Form {...form}>
@@ -317,7 +345,7 @@ import Router from "next/router"
             <CustomFormField
               fieldType={FormFieldType.CHECKBOX}
               control={form.control}
-              name="dataConsent"
+              name="disclosureConsent"
               label="I consent to processing of my data"
             />
             <CustomFormField
