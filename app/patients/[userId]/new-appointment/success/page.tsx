@@ -5,11 +5,16 @@ import { formatDateTime } from '@/lib/utils';
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import { notFound } from 'next/navigation'
+
 
 const SuccessPage = async ({params: {userId}, searchParams} : SearchParamProps) => {
     const appointmentId = (searchParams?.appointmentId as string) || '';
     const appointment = await getAppointment(appointmentId)
     const doctor = Doctors.find((doc)=> doc.name === appointment?.primaryPhysician)
+    if (!appointment) {
+        notFound();
+    }
     return (
     <div className='flex h-screen max-h-screen px-[5%]'>
         <div className='success-img'>
