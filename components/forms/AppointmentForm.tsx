@@ -51,6 +51,20 @@ import { SelectItem } from "../ui/select"
     }
   }
 
+  let buttonLabel;
+
+  switch(type){
+    case 'cancel':
+        buttonLabel = 'Cancel Appointment';
+        break;
+    case 'create':
+        buttonLabel = 'Create Appointment';
+        break;
+    case 'schedule':
+    buttonLabel = 'Schedule Appointment'
+        break;
+  }
+
     return (
     <Form {...form}>
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
@@ -92,7 +106,7 @@ import { SelectItem } from "../ui/select"
                 dateFormat="dd/MM/YYYY"
             />
 
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-6 xl:flex-row">
                 <CustomFormField
                     fieldType={FormFieldType.TEXTAREA}
                     control={form.control}
@@ -122,7 +136,7 @@ import { SelectItem } from "../ui/select"
         )}
 
         <SubmitButton isLoading={isLoading} className={`${type === 'cancel' ? 'shad-danger-btn' : 'shad-primary-btn'} w-full`}>
-            Get Started
+            {buttonLabel}
         </SubmitButton>
     </form>
     </Form>
