@@ -51,7 +51,7 @@ import { SelectItem } from "../ui/select"
     }
   }
 
-  return (
+    return (
     <Form {...form}>
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
         <section className="mb-12 space-y-4">
@@ -59,41 +59,74 @@ import { SelectItem } from "../ui/select"
             <p className="text-dark-700">Request a new appointment in 10 seconds</p>
         </section>
 
-        {type !== 'cancelled' && (
+        {type !== 'cancel' && (
             <>
         <CustomFormField
             fieldType={FormFieldType.SELECT}
             control={form.control}
             name="primaryPhysician"
-            label="Primary care physician"
-            placeholder="Select a physician"
-          >
+            label="Doctor"
+            placeholder="Select a doctor"
+            >
             {Doctors.map((doctor, i) => (
-              <SelectItem key={doctor.name + i} value={doctor.name}>
+                <SelectItem key={doctor.name + i} value={doctor.name}>
                 <div className="flex cursor-pointer items-center gap-2">
-                  <Image
+                    <Image
                     src={doctor.image}
                     width={32}
                     height={32}
                     alt="doctor"
                     className="rounded-full border border-dark-500"
-                  />
-                  <p>{doctor.name}</p>
+                    />
+                    <p>{doctor.name}</p>
                 </div>
-              </SelectItem>
+                </SelectItem>
             ))}
-          </CustomFormField>
-            </>
+            </CustomFormField>
+            <CustomFormField
+                fieldType={FormFieldType.DATEPICKER}
+                control={form.control}
+                name="schedule"
+                label="Expected appoitment date"
+                showTimeSelect
+                dateFormat="dd/MM/YYYY"
+            />
+
+            <div className="flex flex-col gap-6">
+                <CustomFormField
+                    fieldType={FormFieldType.TEXTAREA}
+                    control={form.control}
+                    name="reason"
+                    label="Reason for appoitment"
+                    placeholder="Enter a reason for appontment"
+                />
+                <CustomFormField
+                    fieldType={FormFieldType.TEXTAREA}
+                    control={form.control}
+                    name="notes"
+                    label="Notes"
+                    placeholder="Enter additional notes"
+                />
+            </div>
+        </>
         )}
 
+        {type === "cancel" && (
+            <CustomFormField
+                fieldType={FormFieldType.TEXTAREA}
+                control={form.control}
+                name="cancelationReason"
+                label="Reason for cancellation"
+                placeholder="Enter the reason for cancellation"
+            />
+        )}
 
-
-        <SubmitButton isLoading={isLoading}>
+        <SubmitButton isLoading={isLoading} className={`${type === 'cancel' ? 'shad-danger-btn' : 'shad-primary-btn'} w-full`}>
             Get Started
         </SubmitButton>
     </form>
     </Form>
-  )
-}
+    )
+    }
 
 export default AppointmentForm
