@@ -47,6 +47,12 @@ declare type SearchParamProps = {
     status: Status;
     note: string | undefined;
   };
+
+  declare type AppointmentProps = {
+    userId: string;
+    patientId: string;
+    type: "create" | "cancelled";
+  };
   
   declare type UpdateAppointmentParams = {
     appointmentId: string;
