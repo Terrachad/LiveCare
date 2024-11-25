@@ -4,8 +4,11 @@ import { getPatient } from "@/lib/actions/patient.actions";
 import Image from "next/image"
 import Link from "next/link"
  
-export default async function NewAppointment({params: {userId}}: SearchParamProps) {
-    const patient = await getPatient(userId);
+export default async function NewAppointment({ params }: SearchParamProps) {
+    // First, await the params
+    const { userId } = await Promise.resolve(params)
+    // Then use the awaited userId to fetch patient
+    const patient = await getPatient(userId)
   return (
     <div className="flex h-screen max-h-screen">
       {/** OTP */}
