@@ -17,7 +17,7 @@ import {
     InputOTPSeparator,
     InputOTPSlot,
   } from "@/components/ui/input-otp"
-import { encryptKey } from "@/lib/utils";
+import { decryptKey, encryptKey } from "@/lib/utils";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react"
@@ -32,29 +32,41 @@ const PassKeyModal = () => {
     const localEncryptedKey = typeof window !=='undefined' ? window.localStorage.getItem('accessKey') : null;
 
     useEffect(() => {
-    if(path){
-        if(passKey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY){
+        const acessKey = localEncryptedKey && decryptKey(localEncryptedKey);
+        if(acessKey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY){
+
             setOpen(false);
             router.push('/admin')
         }
-        else{
-            setOpen(true)
-        }
-    }
+        
+
+    
     }, [localEncryptedKey])
     
-
+    
     const validatePasskey = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>{
+        
         e.preventDefault();
         if(passKey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY){
+            console.log('im here')
             const encryptedKey = encryptKey(passKey);
             localStorage.setItem('accessKey',encryptedKey);
             setOpen(false);
+            router.push('/admin')
+
         }
         else{
             setWrongOTP('Invalid OTP key. Please try again')
         }
+
+
     }
+    
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === "Enter") {
+            validatePasskey(e as any); // Trigger validation on Enter key press
+        }
+    };
 
     const closeModal = () => {{
         setOpen(true);
@@ -80,7 +92,7 @@ const PassKeyModal = () => {
             </AlertDialogDescription>
             </AlertDialogHeader>
             <div>
-            <InputOTP maxLength={6} value={passKey} onChange={(value) => setPassKey(value)}>
+            <InputOTP maxLength={6} value={passKey} onChange={(value) => setPassKey(value)} onKeyDown={handleKeyDown}>
                 <InputOTPGroup className="shad-otp">
                     <InputOTPSlot className="shad-otp-slot" index={0} />
                     <InputOTPSlot className="shad-otp-slot" index={1} />
