@@ -51,7 +51,7 @@ declare type SearchParamProps = {
   declare type AppointmentProps = {
     userId: string;
     patientId: string;
-    type: "create" | "cancelled";
+    type: "create" | "cancel" | "schedule";
   };
   
   declare type UpdateAppointmentParams = {
