@@ -92,6 +92,8 @@ import { Checkbox } from "../ui/checkbox"
                                 showTimeSelect={showTimeSelect ?? false}
                                 timeInputLabel="Time:"
                                 wrapperClassName="date-picker"
+                                locale="de_DE"
+                                timeFormat="HH:mm"
                                 />
                             </FormControl>
                         </div>
