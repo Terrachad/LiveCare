@@ -71,7 +71,7 @@ import { FormFieldType } from "@/lib/enum"
             iconSrc="/assets/icons/email.svg"
             iconAlt='email'
         />
-                <CustomFormField 
+        <CustomFormField 
             fieldType={FormFieldType.PHONE}
             control={form.control}
             name='phone'
