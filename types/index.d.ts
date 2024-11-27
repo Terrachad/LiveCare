@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
 
+import { Appointment } from "./appwrite.types";
+
 declare type SearchParamProps = {
     params: { [key: string]: string };
     searchParams: { [key: string]: string | string[] | undefined };
@@ -59,6 +61,8 @@ declare type SearchParamProps = {
     userId: string;
     patientId: string;
     type: "create" | "cancel" | "schedule";
+    appointment?: Appointment;
+    setOpen: (open: boolean) => void;
   };
   
   declare type UpdateAppointmentParams = {
