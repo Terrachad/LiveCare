@@ -1,33 +1,14 @@
-  "use client"
+"use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-import { MoreHorizontal } from "lucide-react"
- 
-import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import {StatusBadge} from "../StatusBadge"
 import { formatDateTime } from "@/lib/utils"
 import Image from "next/image"
 import { Doctors } from "@/constants"
-import AppointmentsModal from "../AppointmentModal"
 import AppointmentModal from "../AppointmentModal"
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type Payment = {
-  id: string
-  amount: number
-  status: "pending" | "scheduled" | "cancelled";
-  email: string
-}
+import { Appointment } from "@/types/appwrite.types"
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Appointment>[] = [
   {
     header: 'ID',
     cell: ({row}) => <p className="text-14-medium">{row.index + 1}</p>
@@ -35,15 +16,13 @@ export const columns: ColumnDef<Payment>[] = [
   {
     accessorKey: 'patient',
     header: 'Patient',
-    cell: ({row}) =>
-       {
-        const appointment = row.original
+    cell: ({row}) => {
+      const appointment = row.original
 
-        return(
-          <p className="text-14-medium">{appointment.patient.name}</p>
-        )
-       }
-
+      return(
+        <p className="text-14-medium">{appointment.patient.name}</p>
+      )
+    }
   },
   {
     accessorKey: "status",
@@ -69,16 +48,26 @@ export const columns: ColumnDef<Payment>[] = [
     cell: ({ row }) => {
       const doctor = Doctors.find((doc) => doc.name === row.original.primaryPhysician)
 
+      // Add a fallback if no doctor is found
+      if (!doctor) {
+        return (
+          <div className="flex items-center gap-3">
+            <p className="whitespace-nowrap">Unknown Doctor</p>
+          </div>
+        )
+      }
+
       return (
         <div className="flex items-center gap-3">
-          <Image src={doctor?.image}
+          <Image 
+            src={doctor.image}
             alt={doctor.name}
-            width={100}
-            height={100}
-            className='size-8'
+            width={32}
+            height={32}
+            className='size-8 rounded-full'
           />
           <p className="whitespace-nowrap">
-            Dr. {doctor?.name}
+            Dr. {doctor.name}
           </p>
         </div>
       )
@@ -88,24 +77,24 @@ export const columns: ColumnDef<Payment>[] = [
     id: "actions",
     header: () => <div className="pl-4">Actions</div>,
     cell: ({ row : {original: data } }) => {
-      
       return (
-          <div className="flex gap-1">
-              <AppointmentModal 
-              type='schedule'
-              patientId={data.patient.$id}
-              userId={data.userId}
-              appointmentId={data}
-
-              />
-              <AppointmentModal type='cancel'              
-              patientId={data.patient.$id}
-              userId={data.userId}
-              appointmentId={data}
-              />
-              
-          </div>
+        <div className="flex gap-1">
+          <AppointmentModal 
+            type='schedule'
+            patientId={data.patient.$id}
+            userId={data.userId}
+            appointment={data}
+          />
+          <AppointmentModal 
+            type='cancel'              
+            patientId={data.patient.$id}
+            userId={data.userId}
+            appointment={data}
+          />
+        </div>
       )
     },
   },
 ]
+
+export default columns;
