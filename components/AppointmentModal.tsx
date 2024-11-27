@@ -11,6 +11,7 @@ import {
 import { useState } from "react"
 import { Button } from "./ui/button";
 import AppointmentForm from "./forms/AppointmentForm";
+import { Appointment } from "@/types/appwrite.types";
 
 
 
@@ -22,7 +23,7 @@ const AppointmentModal = ({
   type: 'schedule' | 'cancel',
   patientId:string,
   userId:string,
-  appointment?:string,
+  appointment?:Appointment,
 
 }) => {
   const [open, setOpen] = useState(false);
