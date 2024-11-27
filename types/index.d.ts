@@ -64,11 +64,11 @@ declare type SearchParamProps = {
     appointment?: Appointment;
     setOpen: (open: boolean) => void;
   };
-  
+ 
   declare type UpdateAppointmentParams = {
     appointmentId: string;
     userId: string;
-    appointment: Appointment;
+    appointment?: Partial<Appointment>;
     type: string;
   };
 
