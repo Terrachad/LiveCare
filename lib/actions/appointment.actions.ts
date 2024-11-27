@@ -74,3 +74,4 @@ export const getRecentAppointmentsList = async () =>{
         console.log(`Error happened while getting recent appointments list ${error}`)
     }
 }
+
