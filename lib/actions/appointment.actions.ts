@@ -79,7 +79,7 @@ export const getRecentAppointmentsList = async () =>{
 
 export const UpdateAppointment = async ( {appointmentId, userId, appointment, type}: UpdateAppointmentParams )=> {
     try {
-        const updatedAppointment =  await databases.updateDocument(
+        const updatedAppointment =  await databases.updateDocument( 
             DATABASE_ID!,
             APPOINTMENT_COLLECTION_ID!,
             appointmentId,
