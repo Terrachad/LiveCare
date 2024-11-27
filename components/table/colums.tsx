@@ -87,12 +87,23 @@ export const columns: ColumnDef<Payment>[] = [
   {
     id: "actions",
     header: () => <div className="pl-4">Actions</div>,
-    cell: ({ row }) => {
-      const payment = row.original
+    cell: ({ row : {original: data } }) => {
       
       return (
           <div className="flex gap-1">
-              <AppointmentModal/>
+              <AppointmentModal 
+              type='schedule'
+              patientId={data.patient.$id}
+              userId={data.userId}
+              appointmentId={data}
+
+              />
+              <AppointmentModal type='cancel'              
+              patientId={data.patient.$id}
+              userId={data.userId}
+              appointmentId={data}
+              />
+              
           </div>
       )
     },
