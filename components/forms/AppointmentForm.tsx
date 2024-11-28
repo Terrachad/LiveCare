@@ -21,7 +21,7 @@ import { AppointmentProps, Status } from "@/types"
 
 
  
-const AppointmentForm = ({
+export const AppointmentForm = ({
     userId, patientId, appointment, setOpen, type
 }: AppointmentProps) =>{
     const router = useRouter();
