@@ -3,29 +3,26 @@
 import {
     AlertDialog,
     AlertDialogAction,
-    AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
-    AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
   import {
     InputOTP,
     InputOTPGroup,
-    InputOTPSeparator,
     InputOTPSlot,
   } from "@/components/ui/input-otp"
 import { decryptKey, encryptKey } from "@/lib/utils";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import {useRouter } from "next/navigation";
 import { useEffect, useState } from "react"
 
 const PassKeyModal = () => {
     const router = useRouter();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [open, setOpen] = useState(false);
-    const path = usePathname();
     const [passKey, setPassKey] = useState('')
     const [wrongOTP, setWrongOTP] = useState('');
 
@@ -41,30 +38,24 @@ const PassKeyModal = () => {
         
 
     
-    }, [localEncryptedKey])
+    }, [localEncryptedKey, router])
     
     
-    const validatePasskey = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>{
-        
-        e.preventDefault();
+    const validatePasskey = () => {
         if(passKey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY){
-            console.log('im here')
             const encryptedKey = encryptKey(passKey);
-            localStorage.setItem('accessKey',encryptedKey);
+            localStorage.setItem('accessKey', encryptedKey);
             setOpen(false);
             router.push('/admin')
-
         }
         else{
             setWrongOTP('Invalid OTP key. Please try again')
         }
-
-
     }
     
-    const handleKeyDown = (e: React.KeyboardEvent) => {
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
-            validatePasskey(e as any); // Trigger validation on Enter key press
+            validatePasskey();
         }
     };
 
@@ -106,7 +97,7 @@ const PassKeyModal = () => {
             </div>
             <AlertDialogFooter>
             <AlertDialogAction 
-            onClick={(e) => validatePasskey(e)}
+            onClick={() => validatePasskey()}
             className="shad-primary-btn w-full"
             
             >
