@@ -1,8 +1,7 @@
 import AppointmentForm from "@/components/forms/AppointmentForm"
-import PatientForm from "@/components/forms/PatientForm"
 import { getPatient } from "@/lib/actions/patient.actions";
+import { SearchParamProps } from "@/types";
 import Image from "next/image"
-import Link from "next/link"
  
 export default async function NewAppointment({ params }: SearchParamProps) {
     // First, await the params
@@ -22,7 +21,7 @@ export default async function NewAppointment({ params }: SearchParamProps) {
             className="mb-12 h-10 w-fit"
           
           />
-          {<AppointmentForm
+          {<AppointmentForm 
             type='create'
             userId={userId}
             patientId={patient.$id}
