@@ -1,3 +1,6 @@
+![meetsphere-rounded-git](https://github.com/user-attachments/assets/de4475c4-972c-4abf-93e8-7a5a8dc92259)
+
+
 # 📋 Table of Contents
 * 🚀 [Introduction](#introduction)
 * ⚙️ [Tech Stack](#tech-stack)
