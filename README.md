@@ -1,4 +1,5 @@
-![meetsphere-rounded-git](https://github.com/user-attachments/assets/de4475c4-972c-4abf-93e8-7a5a8dc92259)
+![meetsphere-rounded-git](https://github.com/user-attachments/assets/56c899bc-c25b-4f30-bf18-2907fbebd93f)
+
 
 
 # 📋 Table of Contents
