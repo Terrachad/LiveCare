@@ -114,7 +114,7 @@ const RegisterForm = ({ user }: { user: User }) => {
             control={form.control}
             name='name'
             label='Full name'
-            placeholder="Giorgia Meloni"
+            placeholder="Marco Rossi"
             iconSrc="/assets/icons/user.svg"
             iconAlt='user'
         />

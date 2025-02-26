@@ -58,7 +58,7 @@ import { FormFieldType } from "@/lib/enum"
             control={form.control}
             name='name'
             label='Full name'
-            placeholder="Giorgia Meloni"
+            placeholder="Marco Rossi"
             iconSrc="/assets/icons/user.svg"
             iconAlt='user'
         />
